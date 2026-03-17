@@ -14,3 +14,10 @@ export const skills = sqliteTable("skills", {
   skillName: text("skill_name").notNull(),
   level: integer("level").default(1),
 });
+
+export const projects = sqliteTable("projects", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  members: text("members").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(new Date()),
+});
