@@ -1,0 +1,10 @@
+# wrangler.toml
+name = "team-builder"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = ".next"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "team-db"
+database_id ="54476abc-0037-465b-8d76-192c3454de42"
+migrations_dir= "drizzle"
