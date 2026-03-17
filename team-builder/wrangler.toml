@@ -1,0 +1,9 @@
+# wrangler.toml
+name = "team-builder"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = ".next"
+
+[[d1_databases]]
+binding = "DB" # Энэ нэрээр бид код дотроо дуудна
+database_name = "team-db"
+database_id = "таны-үүсгэсэн-id-энд-орно"
