@@ -1,15 +1,34 @@
 import { getRequestContext } from "@cloudflare/next-on-pages";
 import { drizzle } from "drizzle-orm/d1";
 import { users, skills } from "@/db/schema";
-// import TeamManager from "./TeamManager";
 import TeamManager from "./TeamManager";
 
 export const runtime = "edge";
 
+// 1. Cloudflare-ийн орчны төрлийг тодорхойлох
+interface CloudflareEnv {
+  DB: D1Database;
+}
+
+// 2. TeamManager-т очих өгөгдлийн төрлийг тодорхойлох
+interface User {
+  id: string; // Эсвэл number (db/schema-аас хамаарна)
+  name: string;
+  role: string;
+}
+
+interface Skill {
+  id: number;
+  userId: string;
+  skillName: string;
+  level: number;
+}
+
 export default async function AdminDashboard() {
-  const env = getRequestContext().env as any;
+  const env = getRequestContext().env as unknown as CloudflareEnv;
   const db = drizzle(env.DB);
 
+  // Өгөгдлүүдээ татаж авах
   const allUsers = await db.select().from(users).all();
   const allSkills = await db.select().from(skills).all();
 
@@ -27,8 +46,11 @@ export default async function AdminDashboard() {
           </div>
         </header>
 
-        {/* Интерактив хэсгийг энд дуудна */}
-        <TeamManager allUsers={allUsers} allSkills={allSkills} />
+        {/* 'any' ашиглахгүйгээр төрлийг нь баталгаажуулж дамжуулна */}
+        <TeamManager
+          allUsers={allUsers as unknown as User[]}
+          allSkills={allSkills as unknown as Skill[]}
+        />
       </div>
     </div>
   );

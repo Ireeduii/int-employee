@@ -2,14 +2,28 @@
 
 import { useState } from "react";
 
+// 1. Интерфэйсүүдийг тодорхойлж өгөх (any-г орлоно)
+interface User {
+  id: string; // Эсвэл number (db/schema-аас хамаарна)
+  name: string;
+  role: string;
+}
+
+interface Skill {
+  id: number;
+  userId: string;
+  skillName: string;
+  level: number;
+}
+
 export default function TeamManager({
   allUsers,
   allSkills,
 }: {
-  allUsers: any[];
-  allSkills: any[];
+  allUsers: User[]; // any[] байсныг солив
+  allSkills: Skill[]; // any[] байсныг солив
 }) {
-  const [selectedTeam, setSelectedTeam] = useState<any[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState<User[]>([]); // <any[]> солив
   const [search, setSearch] = useState("");
 
   // Хайлт болон Чадвараар шүүх логик
@@ -22,7 +36,8 @@ export default function TeamManager({
     return userName || userSkills;
   });
 
-  const addToTeam = (user: any) => {
+  const addToTeam = (user: User) => {
+    // any-г User болгов
     if (!selectedTeam.find((u) => u.id === user.id))
       setSelectedTeam([...selectedTeam, user]);
   };
