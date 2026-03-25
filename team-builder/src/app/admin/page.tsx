@@ -46,7 +46,6 @@ export default async function AdminDashboard() {
           </div>
         </header>
 
-        {/* 'any' ашиглахгүйгээр төрлийг нь баталгаажуулж дамжуулна */}
         <TeamManager
           allUsers={allUsers as unknown as User[]}
           allSkills={allSkills as unknown as Skill[]}
